@@ -61,6 +61,10 @@ public class Card {
             return shortName;
         }
 
+        public int getValue() {
+            return value;
+        }
+
         public static Rank fromShortName(char shortName) {
             for (Rank rank : Rank.values()) {
                 if (rank.getShortName() == shortName) {
