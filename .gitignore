@@ -1,4 +1,5 @@
 .classpath
+*.class
 .gradle
 .project
 bin
@@ -6,3 +7,8 @@ build
 .settings
 *sublime-project
 *sublime-workspace
+
+# Package Files #
+*.jar
+*.war
+*.ear
