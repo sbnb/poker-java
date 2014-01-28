@@ -9,7 +9,7 @@ public class Card {
 
         private final char shortName;
 		private final int index;
-        
+
 
         private Suit(char shortName, int index) {
             this.shortName = shortName;
@@ -19,7 +19,7 @@ public class Card {
         public char getShortName() {
             return shortName;
         }
-        
+
         public int getIndex() {
             return index;
         }
@@ -94,7 +94,8 @@ public class Card {
         return suit;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "" + rank.getShortName() + suit.getShortName();
     }
 }

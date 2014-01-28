@@ -34,6 +34,7 @@ public class Hand {
 	}
 
 	// display hand in standard poker notation: "As Kd Th 7h 4d"
+	@Override
 	public String toString() {
 		return Deck.cardsToString(this.cards, " ");
 	}
@@ -47,7 +48,7 @@ public class Hand {
 		}
 		return max(frequency);
 	}
-	
+
 	private int max(int array[]) {
 		int max = 0;
 		for (int i : array) {
