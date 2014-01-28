@@ -1,15 +1,27 @@
 package in.webplay.poker;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Hand {
 
-	private List<Card> cards;
+	private final List<Card> cards;
 
+	// create a new Hand with cards sorted in descending rank order
 	public Hand(List<Card> cards) {
 		this.cards = cards;
+		Collections.sort(this.cards, compareByRank);
 	}
+
+	// compare Cards by their rank, for a descending order
+	Comparator<Card> compareByRank = new Comparator<Card>() {
+		@Override
+		public int compare(Card c1, Card c2) {
+			return c2.getRank().ordinal() - c1.getRank().ordinal();
+		}
+	};
 
 	// build a Hand from an "Ah Qd Qh 7s Th" style string
 	public static Hand fromString(String cardStr) {
