@@ -102,4 +102,11 @@ public class Card {
 	public String toString() {
         return "" + rank.getShortName() + suit.getShortName();
     }
+
+	// true if this cards rank is one less than the other cards
+    public boolean oneLessThan(Card otherCard) {
+    	int thisVal = getRank().getValue();
+		int otherVal = otherCard.getRank().getValue();
+		return thisVal + 1 == otherVal;
+	}
 }

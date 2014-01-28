@@ -1,6 +1,7 @@
 package in.webplay.poker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -56,4 +57,40 @@ public class Hand {
 		}
 		return max;
 	}
+
+	// return the highest number of consecutive ranked cards (for straights)
+	public int numConnected() {
+		Card prevCard = cards.get(0);
+		int run = 1;
+		int max = 0;
+
+		for (Card card : cards) {
+			if (card.oneLessThan(prevCard)) {
+				run += 1;
+				max = run > max ? run : max;
+			} else {
+				run = 1;
+			}
+			prevCard = card;
+		}
+
+		// special case: ace low straight detection
+		if (max == 4 && isLowStraight()) {
+			return 5;
+		}
+		return max;
+	}
+
+	private static final Card.Rank LOW_STRAIGHT_RANKS[] = { Card.Rank.ACE,
+			Card.Rank.FIVE, Card.Rank.FOUR, Card.Rank.THREE, Card.Rank.TWO };
+
+	// a low straight has sorted ranks: A,5,4,3,2
+	private boolean isLowStraight() {
+		Card.Rank ranks[] = new Card.Rank[5];
+		for (int idx = 0; idx < ranks.length; idx += 1) {
+			ranks[idx] = cards.get(idx).getRank();
+		}
+		return Arrays.equals(LOW_STRAIGHT_RANKS, ranks);
+	}
+
 }

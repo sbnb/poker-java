@@ -14,7 +14,7 @@ public class HandTest {
 
     @Before
     public void before() {
-        hand = new Hand(null);
+        hand = new Hand(new ArrayList<Card>());
     }
 
     @Test
@@ -23,27 +23,46 @@ public class HandTest {
         Hand hand = Hand.fromString(cardStr);
         assertEquals(cardStr, hand.toString());
     }
-        
+
     @Test
 	public void shouldIdentifyThreeSameSuits() throws Exception {
 		Hand threeFlush = Hand.fromString("2c 5d 8c Ac 7h");
 		assertThat(threeFlush.numSameSuits(), is(3));
 	}
-    
+
     @Test
 	public void flushShouldHaveFiveSameSuits() {
 		Hand flush = Hand.fromString("2c 5c 8c Ac 7c");
-		assertThat(flush.numSameSuits(), is(5));		
+		assertThat(flush.numSameSuits(), is(5));
+	}
+
+    @Test
+	public void straightShouldBeSortedInDescendingRankOrder() {
+        Hand straight = Hand.fromString("4d 6h 5s 3c 7c");
+        assertThat(straight.toString(), is("7c 6h 5s 4d 3c"));
+	}
+
+    @Test
+	public void straightShouldHaveFiveConsecutiveRanks() {
+        Hand straight = Hand.fromString("4d 6h 5s 3c 7c");
+        assertThat(straight.numConnected(), is(5));
+	}
+
+    @Test
+	public void aceLowStraightShouldHaveFiveConsecutiveRanks() {
+        Hand lowStraight = Hand.fromString("4d Ah 5s 3c 2c");
+        assertThat(lowStraight.numConnected(), is(5));
+	}
+
+    @Test
+	public void aceHighStraightShouldHaveFiveConsecutiveRanks() {
+        Hand highStraight = Hand.fromString("Kd Ah Js Tc Qc");
+        assertThat(highStraight.numConnected(), is(5));
+	}
+
+    @Test
+	public void handShouldHaveTwoConsecutiveRanks() {
+        Hand hand = Hand.fromString("4d 9h 5s Kc 7c");
+        assertThat(hand.numConnected(), is(2));
 	}
 }
-
-//describe('POKER.Hand.numSameSuits()', function () {
-//    it('trip aces should have two same suits', function () {
-//        tripAces.numSameSuits().should.equal(2);
-//    });
-//
-//    it('flush should have five same suits', function () {
-//        flush.numSameSuits().should.equal(5);
-//    });
-//
-//});
